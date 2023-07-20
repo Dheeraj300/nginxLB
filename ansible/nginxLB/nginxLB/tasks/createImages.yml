@@ -1,0 +1,9 @@
+- copy:
+   src: /images/linux.qcow2
+   dest: /images/lb2.qcow2
+- copy:
+   src: /images/linux.qcow2
+   dest: /images/web3.qcow2
+- copy:
+   src: /images/linux.qcow2
+   dest: /images/web4.qcow2

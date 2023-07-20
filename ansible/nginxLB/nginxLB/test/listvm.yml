@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  tasks:
+    - shell: virsh list --all
+      register: x
+    - block:
+      - debug:
+         msg: there is a vm named lb
+      when: x is defined
+      rescue:
+      - debug:
+          msg: lb is not there

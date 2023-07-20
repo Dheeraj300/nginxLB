@@ -1,0 +1,32 @@
+- block:
+  - package:
+     name: httpd
+     state: latest
+  - copy:
+     content: |
+       This is webserver 3
+     dest: /var/www/html/index.html
+    delegate_to: "{{ web3ip.stdout }}"
+  - service:
+     name: httpd
+     state: started
+     enabled: yes
+  delegate_to: "{{ web3ip.stdout }}"
+  rescue:
+   - ping:
+- block:
+  - package:
+     name: httpd
+     state: latest
+  - copy:
+     content: |
+       This is webserver 4
+       
+     dest: /var/www/html/index.html
+  - service:
+     name: httpd
+     state: started
+     enabled: yes
+  delegate_to: "{{ web4ip.stdout }}"
+  rescue:
+   - ping:

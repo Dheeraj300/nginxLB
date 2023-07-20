@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  tasks:
+   - shell: virsh domifaddr lb2 | grep -i "192.168" | awk '{print $4}' | sed 's/.\{3\}$//'
+     register: lbip
+   - debug: var=lbip.stdout

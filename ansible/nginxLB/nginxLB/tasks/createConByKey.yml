@@ -1,0 +1,36 @@
+- block:
+  - file:
+     path: /root/.ssh
+     state: directory
+  - copy:
+     src: /home/admin/.ssh/id_rsa.pub
+     dest: /root/.ssh/authorized_keys
+  - hostname:
+     name: web3
+  delegate_to: "{{ web3ip.stdout }}"
+  rescue:
+   - ping:
+- block:
+  - file:
+     path: /root/.ssh
+     state: directory
+  - copy:
+     src: /home/admin/.ssh/id_rsa.pub
+     dest: /root/.ssh/authorized_keys
+  - hostname:
+     name: web4
+  delegate_to: "{{ web4ip.stdout }}"
+  rescue:
+   - ping:
+- block:
+  - file:
+     path: /root/.ssh
+     state: directory
+  - copy:
+     src: /home/admin/.ssh/id_rsa.pub
+     dest: /root/.ssh/authorized_keys
+  - hostname:
+     name: lb2
+  delegate_to: "{{ lbip.stdout }}"
+  rescue:
+   - ping:

@@ -1,0 +1,5 @@
+---
+- hosts: localhost
+  tasks:
+    - include_vars: var.yml
+    - import_tasks: con_vis_password.yml

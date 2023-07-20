@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Create nginx load balancer
+      include_role:
+       name: nginxLB
+       

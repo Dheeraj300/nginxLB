@@ -1,0 +1,6 @@
+# failure for this playbook, unable to find when is finding from file
+---
+- hosts: localhost
+  tasks:
+   - ping:
+     when: hello in /home/admin/ansible/lb/sample.txt

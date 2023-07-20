@@ -1,0 +1,18 @@
+- block:
+  - package:
+     name: nginx
+     state: latest
+  - template:
+     src: /home/admin/ansible/nginxLB/nginxLB/templates/lb_file.j2
+     dest: /etc/nginx/conf.d/loadbalancer.conf
+  - service:
+     name: nginx
+     state: started
+     enabled: yes
+  delegate_to: "{{ lbip.stdout }}"
+  rescue:
+   - ping:
+- shell: curl localhost
+  delegate_to: "{{ lbip.stdout }}"
+  register: verify
+- debug: var=verify.stdout

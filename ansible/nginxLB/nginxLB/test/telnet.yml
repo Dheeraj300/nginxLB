@@ -1,0 +1,6 @@
+---
+- hosts: web1
+  tasks:
+    - package:
+       name: telnet
+       state: latest

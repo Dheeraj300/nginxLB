@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  vars:
+    ansible_user: rootcd
+    ansible_password: Google@2023
+  tasks:
+   - find:
+      paths: /home/admin/ansible/lb/
+      file_type: directory
+      get_checksum: true
+     

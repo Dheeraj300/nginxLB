@@ -1,0 +1,126 @@
+---
+- hosts: localhost
+  tasks:
+   - include_vars: vars.yml
+   - copy:
+      src: /images/linux.qcow2
+      dest: /images/lb2.qcow2
+   - copy:
+      src: /images/linux.qcow2
+      dest: /images/web3.qcow2
+   - copy:
+      src: /images/linux.qcow2
+      dest: /images/web4.qcow2
+   - shell: "virt-install --name lb2 --memory 2048 --vcpu 2 --cpu host-passthrough --disk /images/lb2.qcow2 --os-variant rhel9.2 --import --network network=default,model=virtio --noautoconsole"
+   - shell: "virt-install --name web3 --memory 2048 --vcpu 2 --cpu host-passthrough --disk /images/web3.qcow2 --os-variant rhel9.2 --import --network network=default,model=virtio --noautoconsole"
+   - shell: "virt-install --name web4 --memory 2048 --vcpu 2 --cpu host-passthrough --disk /images/web4.qcow2 --os-variant rhel9.2 --import --network network=default,model=virtio --noautoconsole"
+   - wait_for:
+      timeout: 20
+   - shell: virsh domifaddr lb2 | grep -i "192.168" | awk '{print $4}' | sed 's/.\{3\}$//'
+     register: lbip
+   - shell: virsh domifaddr web3 | grep -i "192.168" | awk '{print $4}' | sed 's/.\{3\}$//'
+     register: web3ip
+   - shell: virsh domifaddr web4 | grep -i "192.168" | awk '{print $4}' | sed 's/.\{3\}$//'
+     register: web4ip
+   - lineinfile:
+      path: /etc/hosts
+      line: |
+         {{ lbip.stdout }}  lb2
+         {{ web3ip.stdout }} web3
+         {{ web4ip.stdout }} web4
+   - lineinfile:
+      path: /etc/ansible/hosts
+      line: |
+         [lb2]
+         {{ lbip.stdout }}
+         [web3]
+         {{ web3ip.stdout }}
+         [web4]
+         {{ web4ip.stdout }}
+   - block:
+     - file:
+        path: /root/.ssh
+        state: directory
+     - copy:
+        src: /home/admin/.ssh/id_rsa.pub
+        dest: /root/.ssh/authorized_keys
+     - hostname:
+        name: web3
+     delegate_to: "{{ web3ip.stdout }}"
+     rescue:
+      - ping:
+   - block:
+     - file:
+        path: /root/.ssh
+        state: directory
+     - copy:
+        src: /home/admin/.ssh/id_rsa.pub
+        dest: /root/.ssh/authorized_keys
+     - hostname:
+        name: web4
+     delegate_to: "{{ web4ip.stdout }}"
+     rescue:
+      - ping:
+   - block:
+     - file:
+        path: /root/.ssh
+        state: directory
+     - copy:
+        src: /home/admin/.ssh/id_rsa.pub
+        dest: /root/.ssh/authorized_keys
+     - hostname:
+        name: lb2
+     delegate_to: "{{ lbip.stdout }}"
+     rescue:
+      - ping:
+   - block:
+     - package:
+        name: httpd
+        state: latest
+     - copy:
+        content: |
+          This is webserver 3
+ 
+        dest: /var/www/html/index.html
+       delegate_to: "{{ web3ip.stdout }}"
+     - service:
+        name: httpd
+        state: started
+        enabled: yes
+     delegate_to: "{{ web3ip.stdout }}"
+     rescue:
+      - ping:
+   - block:
+     - package:
+        name: httpd
+        state: latest
+     - copy:
+        content: |
+          This is webserver 4
+          
+        dest: /var/www/html/index.html
+     - service:
+        name: httpd
+        state: started
+        enabled: yes
+     delegate_to: "{{ web4ip.stdout }}"
+     rescue:
+      - ping:
+   - block:
+     - package:
+        name: nginx
+        state: latest
+     - template:
+        src: /home/admin/ansible/lb/lb_file.j2
+        dest: /etc/nginx/conf.d/loadbalancer.conf
+     - service:
+        name: nginx
+        state: started
+        enabled: yes
+     delegate_to: "{{ lbip.stdout }}"
+     rescue:
+      - ping:
+   - shell: curl localhost
+     delegate_to: "{{ lbip.stdout }}"
+     register: verify
+   - debug: var=verify.stdout

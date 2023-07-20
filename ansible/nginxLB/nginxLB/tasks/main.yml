@@ -1,0 +1,17 @@
+- name: Create images for VM
+  include_tasks: createImages.yml
+
+- name: Create three VM, two for Webserver and one for LB
+  include_tasks: createVM.yml
+
+- name: Entry in Host File
+  include_tasks: hostFileEntry.yml
+
+- name: Create Connection from Ansible to all VM using Public Key
+  include_tasks: createConByKey.yml
+
+- name: Install and Configure Webserver 
+  include_tasks: InstallWebserver.yml
+
+- name: Install and Configure Load balancer
+  include_tasks: InstallLb.yml

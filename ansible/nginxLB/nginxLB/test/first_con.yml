@@ -1,0 +1,6 @@
+---
+- hosts: lb
+  vars:
+   ansible_password: s
+  tasks:
+    - ping:

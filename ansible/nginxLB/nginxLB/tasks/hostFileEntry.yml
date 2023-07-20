@@ -1,0 +1,15 @@
+- lineinfile:
+   path: /etc/hosts
+   line: |
+      {{ lbip.stdout }}  lb2
+      {{ web3ip.stdout }} web3
+      {{ web4ip.stdout }} web4
+- lineinfile:
+   path: /etc/ansible/hosts
+   line: |
+      [lb2]
+      {{ lbip.stdout }}
+      [web3]
+      {{ web3ip.stdout }}
+      [web4]
+      {{ web4ip.stdout }}

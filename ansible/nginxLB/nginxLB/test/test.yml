@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  tasks:
+    - copy: 
+       content: |
+         hello hi
+         kjbj
+         jcn
+       dest: /home/admin/test/mm.txt
+    - shell: cat /home/admin/test/mm.txt
+      register: x
+    - debug: var=x
