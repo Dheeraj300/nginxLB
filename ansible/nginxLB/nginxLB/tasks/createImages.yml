@@ -1,9 +1,9 @@
 - copy:
-   src: /images/linux.qcow2
-   dest: /images/lb2.qcow2
+   src: /var/lib/libvirt/images/linux.qcow2
+   dest: /var/lib/libvirt/images/lb2.qcow2
 - copy:
-   src: /images/linux.qcow2
-   dest: /images/web3.qcow2
+   src: /var/lib/libvirt/images/linux.qcow2
+   dest: /var/lib/libvirt/images/web3.qcow2
 - copy:
-   src: /images/linux.qcow2
-   dest: /images/web4.qcow2
+   src: /var/lib/libvirt/images/linux.qcow2
+   dest: /var/lib/libvirt/images/web4.qcow2
