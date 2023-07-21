@@ -13,7 +13,7 @@
 
 - copy: src={{ item.src }} dest={{ item.dest }}
   loop:
-    - { src:'/var/lib/libvirt/images/linux.qcow2', dest:'/var/lib/libvirt/images/lb2.qcow2' }
-    - { src:'/var/lib/libvirt/images/linux.qcow2', dest:'/var/lib/libvirt/images/web3.qcow2' }
-    - { src:'/var/lib/libvirt/images/linux.qcow2', dest:'/var/lib/libvirt/images/web4.qcow2' }
+    - { src: '/var/lib/libvirt/images/linux.qcow2', dest: '/var/lib/libvirt/images/lb2.qcow2' }
+    - { src: '/var/lib/libvirt/images/linux.qcow2', dest: '/var/lib/libvirt/images/web3.qcow2' }
+    - { src: '/var/lib/libvirt/images/linux.qcow2', dest: '/var/lib/libvirt/images/web4.qcow2' }
   remote_src: true
