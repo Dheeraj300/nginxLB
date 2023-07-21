@@ -1,7 +1,7 @@
 - copy:
    src: /var/lib/libvirt/images/linux.qcow2
    dest: /var/lib/libvirt/images/lb2.qcow2
-  remote_src: false
+  remote_src: true
 - copy:
    src: /var/lib/libvirt/images/linux.qcow2
    dest: /var/lib/libvirt/images/web3.qcow2
