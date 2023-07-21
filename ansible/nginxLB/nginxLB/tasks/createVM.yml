@@ -1,6 +1,6 @@
-- shell: "virt-install --name lb2 --memory 2048 --vcpu 2 --cpu host-passthrough --disk /images/lb2.qcow2 --os-variant rhel9.2 --import --network network=default,model=virtio --noautoconsole"
-- shell: "virt-install --name web3 --memory 2048 --vcpu 2 --cpu host-passthrough --disk /images/web3.qcow2 --os-variant rhel9.2 --import --network network=default,model=virtio --noautoconsole"
-- shell: "virt-install --name web4 --memory 2048 --vcpu 2 --cpu host-passthrough --disk /images/web4.qcow2 --os-variant rhel9.2 --import --network network=default,model=virtio --noautoconsole"
+- shell: "virt-install --name lb2 --memory 2048 --vcpu 2 --cpu host-passthrough --disk /var/lib/libvirt/images/lb2.qcow2 --os-variant rhel9.2 --import --network network=default,model=virtio --noautoconsole"
+- shell: "virt-install --name web3 --memory 2048 --vcpu 2 --cpu host-passthrough --disk /var/lib/libvirt/images/web3.qcow2 --os-variant rhel9.2 --import --network network=default,model=virtio --noautoconsole"
+- shell: "virt-install --name web4 --memory 2048 --vcpu 2 --cpu host-passthrough --disk /var/lib/libvirt/images/web4.qcow2 --os-variant rhel9.2 --import --network network=default,model=virtio --noautoconsole"
 - wait_for:
    timeout: 20
 - shell: virsh domifaddr lb2 | grep -i "192.168" | awk '{print $4}' | sed 's/.\{3\}$//'
