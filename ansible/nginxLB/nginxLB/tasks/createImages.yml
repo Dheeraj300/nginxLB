@@ -12,7 +12,7 @@
 #   remote_src: true
 - shell: pwd
   register: x
-- debug: x.stdout
+- debug: var=x.stdout
 - copy: 
    src: "{{ item.src }}" 
    dest: "{{ item.dest }}"
