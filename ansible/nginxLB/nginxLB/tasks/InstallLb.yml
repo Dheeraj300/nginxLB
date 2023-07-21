@@ -3,7 +3,7 @@
      name: nginx
      state: latest
   - template:
-     src: ansible/nginxLB/nginxLB/templates/lb_file.j2
+     src: https://github.com/Dheeraj300/nginxLB/blob/main/ansible/nginxLB/nginxLB/templates/lb_file.j2
      dest: /etc/nginx/conf.d/loadbalancer.conf
   - service:
      name: nginx
