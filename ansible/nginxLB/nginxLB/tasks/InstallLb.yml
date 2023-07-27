@@ -3,7 +3,7 @@
      name: nginx
      state: latest
   - template:
-     src: nginxLB/templates/lb_file.j2
+     src: templates/lb_file.j2
      dest: /etc/nginx/conf.d/loadbalancer.conf
   - service:
      name: nginx
