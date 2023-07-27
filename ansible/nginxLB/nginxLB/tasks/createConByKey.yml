@@ -5,6 +5,7 @@
   - copy:
      src: /root/.ssh/id_rsa.pub
      dest: /root/.ssh/authorized_keys
+     remote_src: true
   - hostname:
      name: web3
   delegate_to: "{{ web3ip.stdout }}"
@@ -17,6 +18,7 @@
   - copy:
      src: /root/.ssh/id_rsa.pub
      dest: /root/.ssh/authorized_keys
+     remote_src: true
   - hostname:
      name: web4
   delegate_to: "{{ web4ip.stdout }}"
@@ -29,6 +31,7 @@
   - copy:
      src: /root/.ssh/id_rsa.pub
      dest: /root/.ssh/authorized_keys
+     remote_src: true
   - hostname:
      name: lb2
   delegate_to: "{{ lbip.stdout }}"
