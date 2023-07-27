@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+    - ping:
+    - template:
+       src: test.j2
+       dest: abc.txt
