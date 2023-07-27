@@ -1,7 +1,8 @@
 ---
-- hosts: 192.168.122.37
+- hosts: all
   tasks:
     - copy:
        src: /root/.ssh/id_rsa.pub
        dest: /root/id.txt
        remote_src: true
+      delegate_to: 192.168.122.37
