@@ -1,6 +1,7 @@
 ---
 - hosts: all
   tasks:
+    - shell: pwd
     - copy:
        src: abc.txt
        dest: /root/id.txt
